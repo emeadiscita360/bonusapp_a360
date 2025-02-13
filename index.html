@@ -73,7 +73,11 @@
         <button id="closeBtn" class="close-btn success-btn">Close Tab</button>
     </div>
     <script>
+        // Get the URL parameters
         const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+        const var1 = urlParams.get('var1');
+        const var2 = urlParams.get('var2');
         const isSuccess = urlParams.get('success') === 'true';
 
         const messageBox = document.getElementById('messageBox');
@@ -81,11 +85,42 @@
         const messageText = document.getElementById('messageText');
         const closeBtn = document.getElementById('closeBtn');
 
-        if (!isSuccess) {
+        if (email && var1 && var2) {
+            // If we have the necessary parameters, try to process them
+            fetch('/api/get-token?email=' + email + '&var1=' + var1 + '&var2=' + var2)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        messageBox.classList.remove('warning');
+                        messageBox.classList.add('success');
+                        messageTitle.innerText = 'Success!';
+                        messageText.innerText = 'Your acknowledgement was successful.';
+                        closeBtn.classList.remove('warning-btn');
+                        closeBtn.classList.add('success-btn');
+                    } else {
+                        messageBox.classList.remove('success');
+                        messageBox.classList.add('warning');
+                        messageTitle.innerText = 'Warning!';
+                        messageText.innerText = 'There was a problem while sending the info. Please contact HR directly.';
+                        closeBtn.classList.remove('success-btn');
+                        closeBtn.classList.add('warning-btn');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    messageBox.classList.remove('success');
+                    messageBox.classList.add('warning');
+                    messageTitle.innerText = 'Warning!';
+                    messageText.innerText = 'There was a problem while sending the info. Please contact HR directly.';
+                    closeBtn.classList.remove('success-btn');
+                    closeBtn.classList.add('warning-btn');
+                });
+        } else {
+            // If any of the required parameters are missing
             messageBox.classList.remove('success');
             messageBox.classList.add('warning');
             messageTitle.innerText = 'Warning!';
-            messageText.innerText = 'There was a problem while sending the info. Please contact HR directly.';
+            messageText.innerText = 'Required information is missing. Please contact HR directly.';
             closeBtn.classList.remove('success-btn');
             closeBtn.classList.add('warning-btn');
         }
