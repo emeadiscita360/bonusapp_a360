@@ -17,3 +17,5 @@ Thumbs.db
 *.sublime-workspace
 
 .vercel
+
+server.js
