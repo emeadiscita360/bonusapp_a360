@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# Logs
+*.log
+
+# Environment files
+.env
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor specific files
+.vscode/
+.idea/
+*.sublime-workspace
+
+.vercel

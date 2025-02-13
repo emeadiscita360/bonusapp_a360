@@ -1,0 +1,19 @@
+{
+  "name": "bonusapp_a360",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Token generator for BonusApp",
+  "dependencies": {
+    "axios": "^1.7.7",
+    "express": "^4.21.0"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}
