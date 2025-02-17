@@ -16,7 +16,7 @@ const resource = 'https://service.flow.microsoft.com/.default';
 const targetApiEndpoint = 'https://prod-163.westus.logic.azure.com:443/workflows/8a6133daf6f84b5886380e6c62923730/triggers/manual/paths/invoke?api-version=2016-06-01';
 
 // Handle form submission via POST request
-app.post('/api/send-data', async (req, res) => {
+app.post('/api/get-token', async (req, res) => {
     const { email, var1, var2 } = req.body;
 
     try {
