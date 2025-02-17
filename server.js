@@ -15,6 +15,7 @@ const tenantId = process.env.TENANT_ID;
 const resource = 'https://service.flow.microsoft.com/.default';
 const targetApiEndpoint = 'https://prod-163.westus.logic.azure.com:443/workflows/8a6133daf6f84b5886380e6c62923730/triggers/manual/paths/invoke?api-version=2016-06-01';
 
+
 // Handle form submission via POST request
 app.post('/api/get-token', async (req, res) => {
     console.log("Received request to /api/get-token");
@@ -52,6 +53,9 @@ app.post('/api/get-token', async (req, res) => {
                 }
             }
         );
+
+        console.log("API Response from Power Automate:", apiResponse.status, apiResponse.data);
+
 
         // Step 3: Check response and return success/failure
         if (apiResponse.status === 200) {
