@@ -32,7 +32,6 @@ app.get('/api/get-token', async (req, res) => {
     }
 
     try {
-        // Step 1: Request an access token from Azure AD
         console.log("Requesting token...");
         const tokenResponse = await axios.post(
             `https://login.microsoftonline.com/${tenantId}/oauth2/v2.0/token`,
@@ -40,40 +39,44 @@ app.get('/api/get-token', async (req, res) => {
                 client_id: clientId,
                 client_secret: clientSecret,
                 grant_type: 'client_credentials',
-                scope: resource
+                scope: resource // Microsoft Graph or your specific resource
             }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
         );
 
         const accessToken = tokenResponse.data.access_token;
         console.log("Token received:", accessToken);
-
-        // Step 2: Send data to Power Automate (Azure Logic Apps)
-        console.log("Sending data to Power Automate...");
-        const apiResponse = await axios.post(
-            targetApiEndpoint,
-            { email, var1, var2 },
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
-                }
-            }
-        );
-
-        console.log("API Response from Power Automate:", apiResponse.status, apiResponse.data);
-
-        // Step 3: Check response and return success/failure
-        if (apiResponse.status === 200) {
-            res.redirect(`/index.html?email=${email}&var1=${var1}&var2=${var2}&success=true`);
-        } else {
-            res.redirect('/index.html?success=false');
-        }
-
     } catch (error) {
-        console.error("Error during token request or API call:", error.message);
+        console.error("Error during token request:", error.response ? error.response.data : error.message);
         res.redirect('/index.html?success=false');
     }
+
+    // Step 2: Send data to Power Automate (Azure Logic Apps)
+    console.log("Sending data to Power Automate...");
+    const apiResponse = await axios.post(
+        targetApiEndpoint,
+        { email, var1, var2 },
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        }
+    );
+
+    console.log("API Response from Power Automate:", apiResponse.status, apiResponse.data);
+
+    // Step 3: Check response and return success/failure
+    if (apiResponse.status === 200) {
+        res.redirect(`/index.html?email=${email}&var1=${var1}&var2=${var2}&success=true`);
+    } else {
+        res.redirect('/index.html?success=false');
+    }
+
+} catch (error) {
+    console.error("Error during token request or API call:", error.message);
+    res.redirect('/index.html?success=false');
+}
 });
 
 app.listen(port, () => {
