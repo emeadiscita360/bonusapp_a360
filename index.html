@@ -97,13 +97,31 @@
         const paramDebug = document.getElementById('paramDebug');
         const closeBtn = document.getElementById('closeBtn');
 
+        // Check for missing parameters first
         if (!email || !var1 || !var2) {
-            messageBox.classList.remove('success');
+            messageBox.classList.remove('success', 'error');
             messageBox.classList.add('warning');
             messageTitle.innerText = 'Warning!';
             messageText.innerText = 'Required information is missing. Please contact HR directly.';
-            closeBtn.classList.remove('success-btn');
+            closeBtn.classList.remove('success-btn', 'error-btn');
             closeBtn.classList.add('warning-btn');
+        } else {
+            // If parameters are complete, check the success flag
+            if (isSuccess) {
+                messageBox.classList.remove('warning', 'error');
+                messageBox.classList.add('success');
+                messageTitle.innerText = 'Success!';
+                messageText.innerText = 'Your acknowledgement was successful.';
+                closeBtn.classList.remove('warning-btn', 'error-btn');
+                closeBtn.classList.add('success-btn');
+            } else {
+                messageBox.classList.remove('warning', 'success');
+                messageBox.classList.add('error');
+                messageTitle.innerText = 'Error!';
+                messageText.innerText = 'There was an error with the acknowledgement.';
+                closeBtn.classList.remove('warning-btn', 'success-btn');
+                closeBtn.classList.add('error-btn');
+            }
         }
 
         paramDebug.innerHTML = `Email: ${email || "N/A"}<br>Var1: ${var1 || "N/A"}<br>Var2: ${var2 || "N/A"}`;
