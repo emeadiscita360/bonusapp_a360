@@ -40,10 +40,10 @@ app.get('/api/get-token', async (req, res) => {
         const accessToken = tokenResponse.data.access_token;
         console.log("Token received:", accessToken);
 
-        res.json({ success: true, token: accessToken });  // Send token as JSON response
+        res.redirect(`/index.html?success=true`);
     } catch (error) {
         console.error("Request failed:", error.message);
-        res.status(500).json({ success: false, message: "Failed to retrieve token" });  // Handle errors
+        res.redirect('/index.html?success=false');
     }
 });
 
