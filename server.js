@@ -18,8 +18,12 @@ const targetApiEndpoint = 'https://prod-163.westus.logic.azure.com:443/workflows
 // Handle form submission via POST request
 app.post('/api/get-token', async (req, res) => {
     console.log("Received request to /api/get-token");
-    console.log("This is a log message");
+
     const { email, var1, var2 } = req.body;
+    if (!email || !var1 || !var2) {
+        console.log("Missing parameters, sending failure.");
+        return res.status(400).json({ success: false, message: 'Missing required parameters' });
+    }
 
     try {
         // Step 1: Request an access token from Azure AD

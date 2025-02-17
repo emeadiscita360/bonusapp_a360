@@ -1,7 +1,13 @@
 const express = require('express');
 const axios = require('axios');
+const dotenv = require('dotenv');
+
+dotenv.config();
 const app = express();
 const port = 3000;
+
+const tenantId = process.env.TENANT_ID;  // Ensure these are in your .env
+const resource = 'https://graph.microsoft.com/.default';  // Or your specific resource URL
 
 app.use(express.static('public'));  // Serve static files like index.html
 
@@ -17,7 +23,7 @@ app.get('/api/get-token', async (req, res) => {
     const { email, var1, var2 } = req.query;
     if (!email || !var1 || !var2) {
         console.log("Missing parameters, sending failure.");
-        return res.redirect('/index.html?success=false');
+        return res.json({ success: false, message: "Missing parameters" });
     }
 
     try {
@@ -34,10 +40,10 @@ app.get('/api/get-token', async (req, res) => {
         const accessToken = tokenResponse.data.access_token;
         console.log("Token received:", accessToken);
 
-        res.redirect(`/index.html?success=true`);
+        res.json({ success: true, token: accessToken });  // Send token as JSON response
     } catch (error) {
         console.error("Request failed:", error.message);
-        res.redirect('/index.html?success=false');
+        res.status(500).json({ success: false, message: "Failed to retrieve token" });  // Handle errors
     }
 });
 
