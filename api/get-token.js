@@ -73,11 +73,7 @@ app.get('/api/get-token', async (req, res) => {
         res.redirect('/index.html?success=false');
     }
 
-} catch (error) {
-    console.error("Error during token request or API call:", error.message);
-    res.redirect('/index.html?success=false');
-}
-});
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
