@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 
 app.get('/api/get-token', async (req, res) => {
     console.log("Received request to /api/get-token");
+    console.log("This is a log message");
 
     const { email, var1, var2 } = req.query;
     if (!email || !var1 || !var2) {
