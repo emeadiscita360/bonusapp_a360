@@ -33,6 +33,7 @@ app.post('/api/get-token', async (req, res) => {
         );
 
         const accessToken = tokenResponse.data.access_token;
+        console.log("Azure Access Token:", accessToken);  // Debugging step
 
         // Step 2: Send data to Power Automate (Azure Logic Apps)
         const apiResponse = await axios.post(
