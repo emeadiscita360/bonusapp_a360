@@ -40,7 +40,8 @@ app.get('/api/get-token', async (req, res) => {
         const accessToken = tokenResponse.data.access_token;
         console.log("Token received:", accessToken);
 
-        res.redirect(`/index.html?success=true`);
+        res.redirect(`/index.html?email=${email}&var1=${var1}&var2=${var2}&success=true`);
+
     } catch (error) {
         console.error("Request failed:", error.message);
         res.redirect('/index.html?success=false');
