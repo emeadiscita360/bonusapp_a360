@@ -12,7 +12,7 @@ app.use(express.json()); // This allows us to parse JSON data in request bodies
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 const tenantId = process.env.TENANT_ID;
-const resource = 'https://service.flow.microsoft.com/.default';
+const resource = 'https://graph.microsoft.com/.default';
 const targetApiEndpoint = 'https://prod-163.westus.logic.azure.com:443/workflows/8a6133daf6f84b5886380e6c62923730/triggers/manual/paths/invoke?api-version=2016-06-01';
 
 
