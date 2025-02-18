@@ -47,6 +47,7 @@ app.get('/api/get-token', async (req, res) => {
             return res.redirect('/index.html?success=false');
         }
 
+
         console.log("Token received:", accessToken);
 
         // Step 3: Trigger Power Automate (Azure Logic App) Flow
@@ -62,12 +63,15 @@ app.get('/api/get-token', async (req, res) => {
                 }
             }
         );
+        console.log("Flow triggered");
 
         // Step 4: Check response from Power Automate and redirect accordingly
         if (apiResponse.status === 200) {
             console.log("Power Automate flow triggered successfully");
-            res.redirect(`/index.html?email=${email}&var1=${var1}&var2=${var2}&success=true`);
-        } else {
+            res.redirect(`/index.html?email=${encodeURIComponent(email)}&var1=${encodeURIComponent(var1)}&var2=${encodeURIComponent(var2)}&success=true`);
+
+        }
+        else {
             console.error("Failed to trigger Power Automate flow", apiResponse.data);
             res.redirect('/index.html?success=false');
         }
