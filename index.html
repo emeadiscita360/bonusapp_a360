@@ -70,8 +70,9 @@
     <div id="messageBox" class="message-box success">
         <h1 id="messageTitle">Success!</h1>
         <p id="messageText">Your acknowledgement was successful.</p>
+        <p id="closeMessage">You can close this tab.</p>
         <p id="paramDebug"></p>
-        <button id="closeBtn" class="close-btn success-btn">Close Tab</button>
+
     </div>
 
     <script>
@@ -127,9 +128,7 @@
 
         /*paramDebug.innerHTML = `Email: ${email || "N/A"}<br>Var1: ${var1 || "N/A"}<br>Var2: ${var2 || "N/A"}`;*/
 
-        closeBtn.addEventListener('click', function () {
-            window.close();
-        });
+
     </script>
 </body>
 
