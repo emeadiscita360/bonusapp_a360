@@ -6,8 +6,9 @@ dotenv.config();
 const app = express();
 const port = 3000;
 
+
 const tenantId = process.env.TENANT_ID;
-const resource = 'https://graph.microsoft.com/.default';  // Or your specific resource URL
+const resource = 'https://service.flow.microsoft.com//.default';  // Or your specific resource URL
 const targetApiEndpoint = 'https://prod-163.westus.logic.azure.com:443/workflows/8a6133daf6f84b5886380e6c62923730/triggers/manual/paths/invoke?api-version=2016-06-01';
 
 app.use(express.static('public'));  // Serve static files like index.html
